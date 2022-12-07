@@ -32,7 +32,7 @@ describe Kernel do
 		end
 		
 		it "can execute child process with delay and capture output" do
-			expect(`sleep 0.01; echo OK`).to be == "OK\n"
+			expect(`sleep 0.01 && echo OK`).to be == "OK\n"
 			expect($?).to be(:success?)
 		end
 	end

@@ -13,7 +13,9 @@ describe IO do
 		
 		it "can send message via pipe" do
 			input, output = IO.pipe
-			
+			input.nonblock = true
+			output.nonblock = true
+
 			reactor.async do
 				sleep(0.001)
 				

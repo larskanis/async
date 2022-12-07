@@ -24,8 +24,10 @@ describe Async::Scheduler do
 		end
 		
 		it "can read a single character" do
-			s1, s2 = Socket.pair :UNIX, :STREAM, 0
-			
+			s1, s2 = Socket.pair(:UNIX, :STREAM, 0)
+			s1.nonblock = true
+			s2.nonblock = true
+
 			child = reactor.async do
 				c = s2.getc
 				expect(c).to be == 'a'
@@ -41,10 +43,10 @@ describe Async::Scheduler do
 		
 		it "can perform blocking read" do
 			s1, s2 = Socket.pair :UNIX, :STREAM, 0
-			
-			s1.nonblock = false
-			s2.nonblock = false
-			
+
+			s1.nonblock = true
+			s2.nonblock = true
+
 			child = reactor.async do
 				expect(s2.read(1)).to be == 'a'
 				expect(s2.read(1)).to be == nil
